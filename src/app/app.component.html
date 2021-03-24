@@ -1,115 +1,97 @@
-<div
-  style="height:45px; align-items: center;display: flex; padding-left: 5px; font-size: 14px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-  <span style="font-size: 18px; font-weight: bold; margin-right: 50px; margin-left: 10px;">SITA AMS Tow Tracker</span>
-
-<div *ngIf="showDateRange">Select Mode
-  <select  name="modeType" id="modeType" style="height:25px;width:125px; font-size: 12px;" [(ngModel)]='selectMode' (change)='modeSelectChange()'>
-    <option value="Monitor" selected="selected">Monitor</option>
-    <option value="TowReview">Tows by Day Review</option>
-  </select>
+<div style="height:45px; align-items: center;display: flex; padding-left: 5px">
+  <h1 style="margin: initial">{{title}}</h1>
 </div>
-  <div style="display: flex; flex-direction: column;">
-    <div *ngIf='selectMode == "Monitor"' style="margin-left:20px;height:20px;align-items: center;display: flex; flex-direction: row;padding-left: 10px">
 
-      <label>Scheduled Tow Start From:</label>
-      <select name="from" [(ngModel)]='offsetFrom' style="font-size: 12px;">
-        <option value="-720" selected="selected">-12 hours</option>
-        <option value="-600">-10 hours</option>
-        <option value="-480">-8 hours</option>
-        <option value="-360">-6 hours</option>
-        <option value="-300">-5 hours</option>
-        <option value="-240">-4 hours</option>
-        <option value="-180">-3 hours</option>
-        <option value="-120">-2 hours</option>
-        <option value="-60">-1 hour</option>
-        <option value="0">0 hour</option>
-        <option value="60">+1 hour</option>
-        <option value="120">+2 hour</option>
-        <option value="180">+3 hour</option>
-      </select>
-      <label style="margin-left: 10px;">To:</label>
-      <select name="to" [(ngModel)]='offsetTo' style="font-size: 12px;">
-        <option value="-180">-3 hours</option>
-        <option value="-120">-2 hours</option>
-        <option value="-60">-1 hour</option>
-        <option value="0">0 hour</option>
-        <option value="60">+1 hour</option>
-        <option value="120">+2 hour</option>
-        <option value="180">+3 hour</option>
-        <option value="240" >+4 hour</option>
-        <option value="300">+5 hour</option>
-        <option value="360">+6 hour</option>
-        <option value="480">+8 hour</option>
-        <option value="600">+10 hour</option>
-        <option value="720" selected="selected">+12 hour</option>
-      </select>
-      <label style="margin-left: 15px;">Show Completed Tows:</label>
-      <input type="checkbox" [(ngModel)]='showCompleted' (change)="setCurrentRange()">
-      <button (click)="setCurrentRange()" style="font-size:12px;">Load</button>
+<div style="height:45px; align-items: center;display: flex; padding-left: 5px">
+  
+  <div *ngIf="showDateRange">Date
+    <select  name="modeType" id="modeType" style="height:25px;width:125px; font-size: 12px;" [(ngModel)]='selectMode' (change)='modeSelectChange()' >
+      <option value="Today" selected="selected">Today</option>
+      <option value="SelectDay">Select Day</option>
+    </select>
+  </div>
+
+  <div  *ngIf='selectMode == "SelectDay"' style="margin-left:20px;height:20px;align-items: center;display: flex; flex-direction: row;padding-left: 10px">
+
+    <label>Date:</label>
+    <input class="gridinput" [(ngModel)]="rangeDate"  style="height:25px;width:125px; font-size: 12px;" type="date">
+    <label>From:</label>
+    <input [ngxTimepicker]="picker" [format]="24" class="gridinput" [(ngModel)]='rangeFrom'  style="height:25px;width:90px; font-size: 12px;">
+    <ngx-material-timepicker #picker [ngxMaterialTimepickerTheme]="darkTheme"></ngx-material-timepicker>
+    <label>To:</label>
+    <input [ngxTimepicker]="picker2" [format]="24" class="gridinput" [(ngModel)]='rangeTo'  style="height:25px;width:90px; font-size: 12px;">
+    <ngx-material-timepicker #picker2 [ngxMaterialTimepickerTheme]="darkTheme"></ngx-material-timepicker>
+
+   </div>
+
+  <div  *ngIf='selectMode == "Today"' style="margin-left:20px;height:20px;align-items: center;display: flex; flex-direction: row;padding-left: 10px">
+
+    <label>From:</label>
+    <select name="from" [(ngModel)]='offsetFrom' style="height:25px;width:100px; font-size: 12px;">
+      <option value="-240">-4 hours</option>
+      <option value="-180">-3 hours</option>
+      <option value="-120" selected="selected">-2 hours</option>
+      <option value="-60">-1 hour</option>
+      <option value="0">0 hour</option>
+      <option value="60">+1 hour</option>
+      <option value="120">+2 hour</option>
+      <option value="180">+3 hour</option>
+      <option value="240">+4 hour</option>
+      <option value="300">+5 hour</option>
+      <option value="360">+6 hour</option>
+
+    </select>
+    <label>To:</label>
+    <select name="to" [(ngModel)]='offsetTo' style="height:25px;width:100px; font-size: 12px;">
+      <option value="-180">-3 hours</option>
+      <option value="-120">-2 hours</option>
+      <option value="-60">-1 hour</option>
+      <option value="0">0 hour</option>
+      <option value="60">+1 hour</option>
+      <option value="120">+2 hour</option>
+      <option value="180">+3 hour</option>
+      <option value="240"  selected="selected">+4 hour</option>
+      <option value="300">+5 hour</option>
+      <option value="360">+6 hour</option>
+    </select>
 
     </div>
 
+    <button (click)="setRange()" style="margin-left:15px;height:25px;width:60px; font-size: 12px;">Load</button>
 
-    <div *ngIf='showDateRange && selectMode == "TowReview"'
-    style="margin-left:20px;height:20px;align-items: center;display: flex; flex-direction: row;padding-left: 10px">
-    <label>Tows Between:</label>
-    <input class="gridinput" [(ngModel)]="rangeDateFrom" (change)='rangeDateFromSet($event)' style="font-size:12px;width:120px" type="date">
-    <label style="margin-left: 10px; margin-right: 10px;">and</label>
-    <input class="gridinput" [(ngModel)]="rangeDateTo" (change)='rangeDateToSet($event)' style="font-size:12px;width:120px" type="date">
-    <select class="gridinput" name="towTypes" id="towTypes" style="font-size:12px;width:100px;margin-left:15px">
-      <option value="Incomplete" selected="selected">Incomplete</option>
-      <option value="Complete">Complete</option>
-      <option value="All">All</option>
-    </select>
-    <button (click)="setSelectedDateRange()" style="font-size:12px">Load</button>
-
-  </div>
-
-  </div>
-  <label style="margin-left:20px">Time Format:</label>
-  <select name="timeFormat" [(ngModel)]='timeFormat' (change)='timeFormatChange($event.target.value)' style="font-size: 12px;">
-    <option value="Local" selected="selected">Local Time</option>
-    <option value="UTC">UTC Time</option>
-  </select>
-
-  <!-- The Menu on the right of the top line  -->
+ 
+    
     <button mat-icon-button [matMenuTriggerFor]="menu"  style="margin-left:auto; margin-right: 20px; background-color: #181D1F;">
       <mat-icon style="color:whitesmoke; background-color: #181D1F;">more_vert</mat-icon>
     </button>
-    <mat-menu #menu="matMenu" style="background-color: yellow;">
-      <button mat-menu-item (click)="sortDefault()" style='font-size: 14px; width:100px; border:unset;height:24px;line-height: 24px;'>Default Sort</button>
-      <button mat-menu-item id="copyBtn" (click)="copyToClipboard()" style='font-size: 14px; width:100px; border:unset;height:24px;line-height: 24px;'>Copy</button>
-      <button mat-menu-item id="csvBtn" (click)="saveToCSV()" style='font-size: 14px; width:100px; border:unset;height:24px;line-height: 24px;'>Save to CSV</button>
-      <hr />
-      <button mat-menu-item [disabled] = "disableLogin" id="loginBtn" (click)="openDialog()" style='font-size: 14px; width:100px; border:unset;height:24px;line-height: 24px;'>Login</button>
-      <button mat-menu-item [disabled] = "disableLogout" id="logoutBtn" (click)="logout()" style='font-size: 14px; width:100px; border:unset;height:24px;line-height: 24px;'>Logout</button>
-      <hr/>
-      <button mat-menu-item id="aboutBtn" (click)="about()" style='font-size: 14px; width:100px; border:unset;height:24px;line-height: 24px;'>About</button>
+    <mat-menu #menu="matMenu" >
+      <button mat-menu-item id="addBtn" (click)="openAddDialog()" style='font-size: 14px; width:200px; margin-right:10px;margin-left:10px;border:unset;height:30px;line-height: 24px;'>Add Allocation</button>
+      <hr style="margin-top: 5px; margin-bottom: 5px;"/>
+      <button mat-menu-item id="fileBtn" (click)="openFileDialog()" style='font-size: 14px; width:200px; margin-right:10px;margin-left:10px;border:unset;height:30px;line-height: 24px;'>Upload Schedule</button>
+      <hr  style="margin-top: 5px; margin-bottom: 5px;"/>
+      <button mat-menu-item id="aboutBtn" (click)="openAddDialog()" style='font-size: 14px; width:100px; margin-right:10px;margin-left:10px;border:unset;height:30px;line-height: 24px;'>Logout</button>
     </mat-menu>
+
 </div>
 
-
-<!--  The core of the page is the Towing Grid implementation of ag-grid component  -->
-<ag-grid-angular style="width: 100%;  height: calc(100vh - 75px);" class="ag-theme-alpine-dark" [rowData]="rowData"
-  [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true" [getRowNodeId]="getRowNodeId"
-  [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay" [frameworkComponents]="frameworkComponents"
-  [components]="components" (cellValueChanged)="onCellValueChanged($event)" [overlayLoadingTemplate]="overlayLoadingTemplate">
+<div style="width:100%">
+<ag-grid-angular #agGrid style="width: 100%; height: calc(100vh - 140px);" id="myGrid" class="ag-theme-balham-dark"
+  [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [getContextMenuItems]= "getContextMenuItems"
+  [frameworkComponents]="frameworkComponents" [animateRows]="true" [enableSorting]="true" [getRowNodeId]="getRowNodeId"
+  [groupUseEntireRow]="true" [suppressCellSelection]="true"  (gridReady)="onGridReady($event)" >
 </ag-grid-angular>
-
-<!-- The bottom status line -->
-<div style="height:20px;align-items: center;display: flex; flex-direction: row;padding-left: 10px">
-  <span style="margin-left: 10px; font-size: 14px">Status:</span>
-  <span style="margin-left: 10px; font-size: 14px" [ngClass]="status">{{status}}</span>
-  <span style="margin-left: 10px; font-size: 14px">Last Update:</span>
-  <span style="margin-left: 10px; font-size: 14px;color:cadetblue">{{lastUpdate}}</span>
-  <span style="margin-left: 10px; font-size: 14px">Rows:</span>
-  <span style="margin-left: 10px; font-size: 14px;color:cadetblue">{{numRows}}</span>
-  <span style="margin-left: 10px; font-size: 14px">Time Format:</span>
-  <span style="margin-left: 10px; font-size: 14px;color:cadetblue">{{globals.timeZone}}</span>
-  <span style="margin-left: 10px; font-size: 14px">User Status:</span>
-  <span style="margin-left: 10px; font-size: 14px;"  [ngClass]="{'LoggedIn': globals.userStatus =='Logged In','LoggedOut': globals.userStatus =='Logged Out' || globals.userStatus =='No Access' ,'NoEdit': globals.userStatus =='No Edit Access'}">{{globals.userStatus}}</span>
-  <span style="margin-left: 30px; font-size: 14px;color: orange;">Version: {{version}}</span>
-  <span *ngIf="TurboStartUp"  style="margin-left: 10px; font-size: 16px; color: yellow">Tows Loaded. Flight Data Loading In Progress</span>
-  <span *ngIf="SuicideMode"  style="margin-left: 10px; font-size: 16px; color: red">WARNING!! Loading of Tow Data is Incomplete WARNING!!!</span>
+</div>
+ 
+<div style="width:100%; height: 36px;">
+      <div class="alternate-button" style="margin-right:20px;height:36px;float: right;">
+        <mat-slider
+        [max]="22"
+        [min]="5"
+        [step]="1"
+        [(ngModel)]="zoomLevel"
+        (change) = "zoomChanged()"
+  ></mat-slider>
+      </div>
+      <div style="margin-right:10px;margin-top:12px;height:36px;float: right;">Zoom </div>
 </div>
 

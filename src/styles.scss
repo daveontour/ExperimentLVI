@@ -61,5 +61,49 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+
+.alternate-button {
+  // Extract the color configuration from the theme and generate
+  // the color theme styles for `mat-button`.
+  .mat-slider-thumb{
+    background-color: white;
+  }
+  .mat-slider-container{
+    background-color: white;
+  }
+  .mat-slider-track-wrapper{
+    background-color: white;
+  }
+  .mat-slider-track-background{
+    background-color: white;
+  }
+  .mat-slider-track-fill{
+    background-color: white;
+  }
+  .mat-slider-focus-ring{
+    background-color: aliceblue;
+  }
+  div.mat-slider-thumb{
+    color: white;
+    background-color: aliceblue;
+  }
+  .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+    border-color: aliceblue;
+    background-color: white;
+}
+}
+.mat-slider-horizontal {
+  width: 300px;
+}
+
+// For time picker in modal dialog
+.timepicker-overlay {
+  z-index: 1100 !important;
+}
+
+.timepicker-backdrop-overlay {
+  z-index: 1100 !important;
+}
+
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

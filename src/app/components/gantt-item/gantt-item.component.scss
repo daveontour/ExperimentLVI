@@ -1,0 +1,62 @@
+.ganttItemArr {
+  position: absolute;
+  background-color: green;
+  height: 10px;
+  top:1px;
+  display: flex;
+  align-items: center;
+  z-index: 63000;
+  border-radius: 4px;
+  padding-left: 5px;
+  font-size: 10px;
+  }
+  .ganttItemDep {
+    position: absolute;
+    background-color: green;
+    height: 10px;
+    top:13px;
+    display: flex;
+    align-items: center;
+    z-index: 63000;
+    border-radius: 4px;
+    padding-left: 5px;
+    font-size: 10px;
+    }
+
+   .single {
+    height: 17px;
+    top: 3px;
+   } 
+   .invisible {
+     display:none;
+   }
+   .visible {
+    display:block;
+  }
+  .SH {
+    background-color: blueviolet
+  }
+
+  .OB {
+    background-color: green;
+  }
+
+  .arrUnassigned {
+    background: rgb(206, 101, 101);
+  }
+  .depUnassigned {
+    background: rgb(199, 22, 22);
+  }
+
+  .nowIndicator {
+      border-left: 2px goldenrod dashed;
+      position: absolute;
+      top: 0px;
+      z-index: 64000;
+  }
+  .hourIndicator {
+    border-left: 1px lightslategray dashed;
+    position: absolute;
+    top: 0px;
+    
+}

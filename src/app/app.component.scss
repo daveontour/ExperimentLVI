@@ -1,92 +1,24 @@
-.ag-header-cell-label {
-  justify-content: center;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
-
-.grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
-}
-
-.Rolling {
-  color: lime;
-}
-
-.Fixed {
-  color: yellow;
-}
-
 .Connected {
   color: lime;
 }
 
-.Connecting {
-  color: yellow;
-  animation: blinker 1s linear infinite;
+.redFont {
+  color:red;
 }
 
-.NoEdit {
+.Connecting {
   color: yellow;
 }
 
 .Disconnected {
   color: red;
-  animation: blinker 1s linear infinite;
 }
-
-.Loading {
-  margin-left: auto;
-  margin-right: 30px;
-  font-size: 16px;
-  color: cadetblue;
-  font-weight: bold;
-  animation: blinker 1s linear infinite;
-}
-
-
-.LoggedIn {
-  color: lime;
-}
-
-.Monitor {
-  color: lime;
-
-}
-
-.Test {
-  background-color: 'lime';
-  color: 'black';
-  animation: blinker 1s linear infinite;
-}
-
-.Review {
-  color: yellow;
-  animation: blinker 1s linear infinite;
-}
-
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
-}
-
-.LoggedOut {
-  color: red;
-}
-
 .Live {
-  color: skyblue;
+    color: skyblue;
 }
 
 .Refresh {
-  color: mediumturquoise
+    color: mediumturquoise
 }
 
 label {
@@ -96,20 +28,19 @@ label {
 
 .gridinput {
   font-family: inherit;
-  width: 35px;
+  width:35px;
   font-size: 9px;
   border: 1px solid lightgray;
   border-radius: 3px;
   padding-left: 3px;
 }
-
 button {
   font-family: inherit;
-  width: 35px;
+  width:35px;
   font-size: 9px;
   border: 1px solid lightgray;
   border-radius: 3px;
-  padding-left: 3px;
+  padding-left: 3px; 
   margin-left: 5px;
 }
 
@@ -121,7 +52,7 @@ select {
   margin-left: 5px;
 }
 
-.hide {
+.hide{
   display: none
 }
 

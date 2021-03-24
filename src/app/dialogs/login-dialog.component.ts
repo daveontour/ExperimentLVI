@@ -5,7 +5,8 @@ import { NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   template: `
     <div class="modal-header" style="color:black">
-      <h4 class="modal-title">SITA AMS Tow Tracker</h4>
+      <h4 class="modal-title">Counter Allocation</h4>
+      <h4 class="modal-title">Login Validation</h4>
     </div>
     <div class="modal-body" style="color:black" align="center">
       <p>Login to access Tow Tracker using your AMS credentials</p>
