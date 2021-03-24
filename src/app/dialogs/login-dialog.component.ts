@@ -5,11 +5,10 @@ import { NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   template: `
     <div class="modal-header" style="color:black">
-      <h4 class="modal-title">Counter Allocation</h4>
-      <h4 class="modal-title">Login Validation</h4>
+      <h4 class="modal-title">Counter Allocation Manager</h4>
     </div>
     <div class="modal-body" style="color:black" align="center">
-      <p>Login to access Tow Tracker using your AMS credentials</p>
+      <p>Login to access Counter Allocation Manager</p>
       <table>
       <tr><td><label>User Name:&nbsp;</label></td><td><input type="text" id = "id" /></td></tr>
       <tr><td><label>&nbsp;&nbsp;Password:&nbsp;</label></td><td><input type="password" id = "token" /></td></tr>

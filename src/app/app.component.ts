@@ -13,6 +13,7 @@ import * as $ from 'jquery';
 import { AddAllocationDialogComponent } from './dialogs/add-allocation-dialog/add-allocation-dialog.component';
 import { UploadFileDialogComponent } from './dialogs/upload-file-dialog/upload-file-dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
+import { LoginDialogComponent } from './dialogs/login-dialog.component';
 
 const _start = AbstractXHRObject.prototype._start;
 
@@ -225,6 +226,26 @@ export class AppComponent implements OnInit {
     });
   }
 
+  logout(){
+    this.loginDialog();
+  }
+  loginDialog(message = ''): any {
+
+    const that = this;
+    const modalRef = this.modalService.open(LoginDialogComponent, { centered: true, size: 'md', backdrop: 'static' });
+    modalRef.result.then((result) => {
+      if (result.login) {
+        this.loadData();
+        this.gridApi.sizeColumnsToFit();
+        alert(result.id+"   "+result.token);
+        // this.http.get<any>(this.globals.serverURL + '/addAllocation?first='+result.first+'&last='+result.last+'&day='+result.day+'&start='+result.start+'&end='+result.end+'&airline='+result.airline+'&flight='+result.flight+'&sto='+result.sto).subscribe(data => {
+        //   this.gridApi.setRowData();
+        //   this.loadData();
+        // });
+      }
+    });
+  }
+
   openAddDialog(message = ''): any {
 
     const that = this;
@@ -307,14 +328,13 @@ export class AppComponent implements OnInit {
       that.gridApi.sizeColumnsToFit();
      
     });
+    this.loginDialog();
 
   }
 
  
   onGridReady(params) {
     this.gridApi = params.api;
-    this.loadData();
-    this.gridApi.sizeColumnsToFit();
   }
 
   displayModeChangeCallback(loadData = true) {
