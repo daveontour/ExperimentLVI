@@ -4,11 +4,11 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   template: `
     <div class="modal-header" style="color:black">
-      <h4 class="modal-title">Delete Single Counter Allocation</h4>
+      <h4 class="modal-title">Delete Multi Counter Allocation</h4>
     </div>
     <div class="modal-body" style="color:black" align="left">
     
-    Delete Allocation <br/><br/>Counter: <strong>{{alloc.counter}}</strong><br>Flight: <strong>{{alloc.airline}}{{+alloc.flightNumber}}</strong><br/>Start Time: <strong>{{alloc.startTime}}</strong> <br/> End Time: <strong>{{alloc.endTime}}</strong>
+    Delete Allocation <br/><br/>Counter: <strong>All Counters</strong><br>Flight: <strong>{{alloc.airline}}{{+alloc.flightNumber}}</strong><br/>Start Time: <strong>{{alloc.startTime}}</strong> <br/> End Time: <strong>{{alloc.endTime}}</strong>
     
     </div>
     <div class="modal-footer">
@@ -17,7 +17,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
     </div>
   `
 })
-export class DeleteDialogComponent  {
+export class DeleteMultiDialogComponent  {
 
   @Input() alloc: any;
 

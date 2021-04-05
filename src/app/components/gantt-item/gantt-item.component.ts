@@ -1,9 +1,13 @@
 import { MessengerService } from 'src/app/services/messenger.service';
 import { GlobalsService } from '../../services/globals.service';
-import { Component, AfterViewInit, HostListener, NgZone } from '@angular/core';
+import { Component, AfterViewInit, HostListener, NgZone, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import * as moment from 'moment';
 import * as $ from 'jquery';
+import { AppComponent } from 'src/app/app.component';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { fromEvent, Subscription } from 'rxjs';
 
 @Component({
     templateUrl: './gantt-item.component.html',
@@ -11,6 +15,7 @@ import * as $ from 'jquery';
 })
 export class GanttRendererComponent implements ICellRendererAngularComp, AfterViewInit {
     public flights: any;
+    public counter: any;
     public html: any;
 
     public zone: NgZone;
@@ -18,9 +23,16 @@ export class GanttRendererComponent implements ICellRendererAngularComp, AfterVi
     public start: number[] = [];
     public width: number[] = [];
     public record: any[] = [];
+    public sub: Subscription;
 
+    @ViewChild('userMenu') userMenu: TemplateRef<any>;
 
-    constructor(public globals: GlobalsService, public messenger: MessengerService) {
+    overlayRef: OverlayRef | null;
+    constructor(
+        public globals: GlobalsService, 
+        public messenger: MessengerService,
+        public overlay: Overlay,
+        public viewContainerRef: ViewContainerRef) {
 
         const that = this;
         messenger.updateNow$.subscribe(
@@ -33,6 +45,7 @@ export class GanttRendererComponent implements ICellRendererAngularComp, AfterVi
     agInit(params: any): void {
 
         try {
+        this.counter = params.data.code;
         this.flights = params.data.assignments.flights;
         } catch (Exception){
             this.flights = null;
@@ -86,6 +99,7 @@ export class GanttRendererComponent implements ICellRendererAngularComp, AfterVi
             this.flights.forEach(el => {
                 try {
 
+                    el['counter'] = this.counter;
                     this.record.push(el);
 
                     const s = moment(el.startTime);
@@ -137,10 +151,14 @@ export class GanttRendererComponent implements ICellRendererAngularComp, AfterVi
         return this.res[index];
     }
 
-    handleContext(){
-        alert("Context menu selected");
+    deleteSingleAllocation(index: number){
+        AppComponent.that.deleteAllocation(this.record[index]);
+    }
+    deleteFlightAllocation(index: number){
+        AppComponent.that.deleteFlightAllocation(this.record[index]);
     }
 
+    
     getClassArr(index: number) {
 
         const clazz = [];
@@ -156,7 +174,7 @@ export class GanttRendererComponent implements ICellRendererAngularComp, AfterVi
         const e = moment(record.end);
         const s1 = e.diff(this.globals.zeroTime, 'minutes');
 
-        // The end of the allocatin is before the origin time
+        // The end of the allocation is before the origin time
         if (s1 <= 0) {
             clazz.push('invisible');
             return clazz;

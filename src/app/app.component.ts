@@ -14,6 +14,7 @@ import { AddAllocationDialogComponent } from './dialogs/add-allocation-dialog/ad
 import { UploadFileDialogComponent } from './dialogs/upload-file-dialog/upload-file-dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
 import { LoginDialogComponent } from './dialogs/login-dialog.component';
+import { DeleteMultiDialogComponent } from './dialogs/delete-multi-dialog/delete-multi-dialog.component';
 
 const _start = AbstractXHRObject.prototype._start;
 
@@ -40,7 +41,7 @@ export class AppComponent implements OnInit {
   private gridApi: any;
 
   public count = 0;
-  
+
   public defaultColDef;
 
   public reconnectTask;
@@ -133,44 +134,44 @@ export class AppComponent implements OnInit {
     };
 
   }
- getContextMenuItems(params) {
+  getContextMenuItems(params) {
 
 
-  var flights = params.node.data.assignments.flights;
-  var counter = params.node.data.code;
-  var result = [];
+    var flights = params.node.data.assignments.flights;
+    var counter = params.node.data.code;
+    var result = [];
 
-  result.push(      {
-    // custom item
-    name: 'View Allocations ',
-    action: function () {
-      AppComponent.that.openDeleteDialog(params.node.data);
-    },
-    cssClasses: ['redFont', 'bold'],
-  })
-  
-  result.push( 'separator');
+    result.push({
+      // custom item
+      name: 'View Allocations ',
+      action: function () {
+        AppComponent.that.openDeleteDialog(params.node.data);
+      },
+      cssClasses: ['redFont', 'bold'],
+    })
 
-  if (flights != null){
-    flights.forEach(element => {
-      element.counter = counter;
-      result.push(
-        {
-          name: 'Delete Allocation: ' +  element.airline+element.flightNumber+ ' Start Time: '+element.startTime+'  End Time: '+element.endTime,
-          action: function () {
-            AppComponent.that.openDeleteDialog(element);
-          },
-          cssClasses: ['redFont', 'bold']
+    result.push('separator');
 
-        }
-      );
-    });
-  }
- 
-  
+    if (flights != null) {
+      flights.forEach(element => {
+        element.counter = counter;
+        result.push(
+          {
+            name: 'Delete Allocation: ' + element.airline + element.flightNumber + ' Start Time: ' + element.startTime + '  End Time: ' + element.endTime,
+            action: function () {
+              AppComponent.that.openDeleteDialog(element);
+            },
+            cssClasses: ['redFont', 'bold']
+
+          }
+        );
+      });
+    }
+
+
     return result;
   }
-  
+
 
   refresh() {
     this.gridApi.setRowData();
@@ -222,11 +223,11 @@ export class AppComponent implements OnInit {
       });
 
       this.gridApi.updateRowData({ update: itemsToUpdate });
- 
+
     });
   }
 
-  logout(){
+  logout() {
     this.loginDialog();
   }
   loginDialog(message = ''): any {
@@ -235,13 +236,18 @@ export class AppComponent implements OnInit {
     const modalRef = this.modalService.open(LoginDialogComponent, { centered: true, size: 'md', backdrop: 'static' });
     modalRef.result.then((result) => {
       if (result.login) {
-        this.loadData();
-        this.gridApi.sizeColumnsToFit();
-        alert(result.id+"   "+result.token);
-        // this.http.get<any>(this.globals.serverURL + '/addAllocation?first='+result.first+'&last='+result.last+'&day='+result.day+'&start='+result.start+'&end='+result.end+'&airline='+result.airline+'&flight='+result.flight+'&sto='+result.sto).subscribe(data => {
-        //   this.gridApi.setRowData();
-        //   this.loadData();
-        // });
+
+        // Validte the user is authenticated
+        this.http.get<any>(this.globals.serverURL + '/validatAdminLogin?id=' + result.id + '&token=' + result.token + '').subscribe(data => {
+
+          if (data.status == "SUCCESS"){
+            this.loadData();
+            this.gridApi.sizeColumnsToFit();
+          } else {
+            that.loginDialog();
+          }
+
+        });
       }
     });
   }
@@ -254,12 +260,16 @@ export class AppComponent implements OnInit {
     modalRef.componentInstance.counters = this.resources;
     modalRef.result.then((result) => {
       if (result.login) {
-        this.http.get<any>(this.globals.serverURL + '/addAllocation?first='+result.first+'&last='+result.last+'&day='+result.day+'&start='+result.start+'&end='+result.end+'&airline='+result.airline+'&flight='+result.flight+'&sto='+result.sto).subscribe(data => {
+        this.http.get<any>(this.globals.serverURL + '/addAllocation?first=' + result.first + '&last=' + result.last + '&day=' + result.day + '&start=' + result.start + '&end=' + result.end + '&airline=' + result.airline + '&flight=' + result.flight + '&sto=' + result.sto).subscribe(data => {
           this.gridApi.setRowData();
           this.loadData();
         });
       }
     });
+  }
+
+  deleteAllocation(alloc: any){
+    this.openDeleteDialog(alloc);
   }
 
   openDeleteDialog(alloc: any): any {
@@ -270,9 +280,29 @@ export class AppComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result.login) {
         debugger;
-        this.http.get<any>(this.globals.serverURL + '/deleteAllocation?counter='+result.allocation.counter+'&start='+result.allocation.startTime+'&end='+result.allocation.endTime+'&airline='+result.allocation.airline+'&flight='+result.allocation.flightNumber+'&sto='+result.allocation.scheduleTime).subscribe(data => {
-            this.gridApi.setRowData();
-            this.loadData();
+        this.http.get<any>(this.globals.serverURL + '/deleteAllocation?counter=' + result.allocation.counter + '&start=' + result.allocation.startTime + '&end=' + result.allocation.endTime + '&airline=' + result.allocation.airline + '&flight=' + result.allocation.flightNumber + '&sto=' + result.allocation.scheduleTime).subscribe(data => {
+          this.gridApi.setRowData();
+          this.loadData();
+        });
+      }
+    });
+  }
+
+  deleteFlightAllocation(alloc: any){
+    this.openDeleteFlightDialog(alloc);
+  }
+
+  openDeleteFlightDialog(alloc: any): any {
+
+    const that = this;
+    const modalRef = this.modalService.open(DeleteMultiDialogComponent, { centered: true, size: 'md', backdrop: 'static' });
+    modalRef.componentInstance.alloc = alloc;
+    modalRef.result.then((result) => {
+      if (result.login) {
+        debugger;
+        this.http.get<any>(this.globals.serverURL + '/deleteFlightAllocation?&start=' + result.allocation.startTime + '&end=' + result.allocation.endTime + '&airline=' + result.allocation.airline + '&flight=' + result.allocation.flightNumber + '&sto=' + result.allocation.scheduleTime).subscribe(data => {
+          this.gridApi.setRowData();
+          this.loadData();
         });
       }
     });
@@ -308,12 +338,12 @@ export class AppComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append('fileKey', fileToUpload, fileToUpload.name);
     this.http.post(endpoint, formData).subscribe(data => {
-        this.gridApi.setRowData();
-        this.loadData();
+      this.gridApi.setRowData();
+      this.loadData();
     });
-}
+  }
 
-  deleteToday(){
+  deleteToday() {
     this.http.get<any>(this.globals.serverURL + '/deleteTodaysAllocations').subscribe(data => {
       this.gridApi.setRowData();
       this.loadData();
@@ -324,15 +354,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     const that = this;
-    window.addEventListener("resize", function(e){
+    window.addEventListener("resize", function (e) {
       that.gridApi.sizeColumnsToFit();
-     
+
     });
     this.loginDialog();
 
   }
 
- 
+
   onGridReady(params) {
     this.gridApi = params.api;
   }
@@ -343,8 +373,8 @@ export class AppComponent implements OnInit {
     }
   }
 
-  setRange(){
-    if (this.selectMode == 'Today'){
+  setRange() {
+    if (this.selectMode == 'Today') {
       this.setCurrentRange();
     } else {
       this.setSelectedRange();
@@ -384,8 +414,8 @@ export class AppComponent implements OnInit {
 
   }
 
-  zoomChanged(){
-      this.zoom(this.zoomLevel - 11)
+  zoomChanged() {
+    this.zoom(this.zoomLevel - 11)
   }
 
   zoom(d: number) {

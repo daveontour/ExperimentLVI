@@ -27,6 +27,7 @@ import { AddAllocationDialogComponent } from './dialogs/add-allocation-dialog/ad
 import * as $ from "jquery";
 import { UploadFileDialogComponent } from './dialogs/upload-file-dialog/upload-file-dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
+import { DeleteMultiDialogComponent } from './dialogs/delete-multi-dialog/delete-multi-dialog.component';
 
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
@@ -44,7 +45,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
      SortableHeaderTimeMarkerComponent,
      AddAllocationDialogComponent,
      UploadFileDialogComponent,
-     DeleteDialogComponent, ],
+     DeleteDialogComponent,
+     DeleteMultiDialogComponent ],
   imports: [
    BrowserModule,
    CommonModule,
@@ -63,6 +65,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   providers: [ MessengerService, DirectorService, GlobalsService, ],
   bootstrap: [AppComponent],
   exports: [BrowserModule, MatMenuModule, MatIconModule, MatSliderModule],
-  entryComponents: [  SortableHeaderTimeMarkerComponent, AddAllocationDialogComponent, UploadFileDialogComponent, DeleteDialogComponent,LoginDialogComponent, GenericAlertComponent ],
+  entryComponents: [  SortableHeaderTimeMarkerComponent, AddAllocationDialogComponent, UploadFileDialogComponent, DeleteDialogComponent,DeleteMultiDialogComponent,LoginDialogComponent, GenericAlertComponent ],
 })
 export class AppModule { }

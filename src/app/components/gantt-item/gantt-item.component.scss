@@ -8,7 +8,7 @@
   z-index: 63000;
   border-radius: 4px;
   padding-left: 5px;
-  font-size: 10px;
+  font-size: 18px;
   }
   .ganttItemDep {
     position: absolute;
@@ -20,18 +20,18 @@
     z-index: 63000;
     border-radius: 4px;
     padding-left: 5px;
-    font-size: 10px;
+    font-size: 18px;
     }
 
    .single {
-    height: 17px;
+    height: 34px;
     top: 3px;
    } 
    .invisible {
      display:none;
    }
    .visible {
-    display:block;
+    display:flex;
   }
   .SH {
     background-color: blueviolet
