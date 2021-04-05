@@ -8,7 +8,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
     </div>
     <div class="modal-body" style="color:black" align="left">
     
-    Delete Allocation <br/><br/>Counter: <strong>All Counters</strong><br>Flight: <strong>{{alloc.airline}}{{+alloc.flightNumber}}</strong><br/>Start Time: <strong>{{alloc.startTime}}</strong> <br/> End Time: <strong>{{alloc.endTime}}</strong>
+    Delete Allocations <br/><br/>Counter: <strong>All Counters</strong><br>Flight: <strong>{{alloc.airline}}{{+alloc.flightNumber}}</strong><br/>Start Time: <strong>{{alloc.startTime}}</strong> <br/> End Time: <strong>{{alloc.endTime}}</strong>
     
     </div>
     <div class="modal-footer">

@@ -13,7 +13,7 @@ export class GlobalsService {
   public offsetFrom = -120;
   public offsetTo = 240;
   public airports: any;
-  public serverURL = 'http://localhost:8090/';
+  public serverURL = window.localStorage.getItem('serverURL');
   public serverWebRoot = 'http://localhost:8080';
 
   constructor() { }

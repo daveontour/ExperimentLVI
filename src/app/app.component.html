@@ -1,5 +1,5 @@
 <div style="height:45px; align-items: center;display: flex; padding-left: 5px">
-  <h1 style="margin: initial">{{title}}</h1>
+  <h1 style="margin: initial">{{title}}  {{airport}}</h1>
 </div>
 
 <div style="height:45px; align-items: center;display: flex; padding-left: 5px">
@@ -75,7 +75,7 @@
 </div>
 
 <div style="width:100%">
-<ag-grid-angular #agGrid style="width: 100%; height: calc(100vh - 140px);" id="myGrid" class="ag-theme-balham-dark"
+<ag-grid-angular #agGrid style="width: 100%; height: calc(100vh - 140px);" id="myGrid" class="ag-theme-balham-dark" [rowHeight]="30"
   [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [getContextMenuItems]= "getContextMenuItems"
   [frameworkComponents]="frameworkComponents" [animateRows]="true" [enableSorting]="true" [getRowNodeId]="getRowNodeId"
   [groupUseEntireRow]="true" [suppressCellSelection]="true"  (gridReady)="onGridReady($event)" >

@@ -2,30 +2,30 @@
   position: absolute;
   background-color: green;
   height: 10px;
-  top:1px;
+  top:5px;
   display: flex;
   align-items: center;
   z-index: 63000;
   border-radius: 4px;
   padding-left: 5px;
-  font-size: 18px;
+  font-size: 12px;
   }
   .ganttItemDep {
     position: absolute;
     background-color: green;
     height: 10px;
-    top:13px;
+    top:5px;
     display: flex;
     align-items: center;
     z-index: 63000;
     border-radius: 4px;
     padding-left: 5px;
-    font-size: 18px;
+    font-size: 12px;
     }
 
    .single {
-    height: 34px;
-    top: 3px;
+    height: 26px;
+    top: 2px;
    } 
    .invisible {
      display:none;

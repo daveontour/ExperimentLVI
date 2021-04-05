@@ -33,6 +33,7 @@ AbstractXHRObject.prototype._start = function (method, url, payload, opts) {
 export class AppComponent implements OnInit {
 
   public title = 'Counter Allocation';
+  public airport = '';
   public frameworkComponents: any;
   public rowData: any;
   public columnDefs: any;
@@ -98,8 +99,8 @@ export class AppComponent implements OnInit {
       {
         headerName: 'Counter',
         field: 'externalName',
-        minWidth: 100,
-        maxWidth: 100,
+        minWidth: 120,
+        maxWidth: 120,
         enableCellChangeFlash: true,
         sortable: true,
         enableRowGroup: true,
@@ -243,6 +244,7 @@ export class AppComponent implements OnInit {
           if (data.status == "SUCCESS"){
             this.loadData();
             this.gridApi.sizeColumnsToFit();
+            that.airport = data.airport;
           } else {
             that.loginDialog();
           }
