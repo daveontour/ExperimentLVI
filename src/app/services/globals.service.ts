@@ -11,7 +11,7 @@ export class GlobalsService {
   public zeroTime = moment().subtract(120, 'm');
   public rangeMode = 'offset';
   public offsetFrom = -120;
-  public offsetTo = 240;
+  public offsetTo = 720;
   public airports: any;
   public serverURL = window.localStorage.getItem('serverURL');
   public serverWebRoot = 'http://localhost:8080';
