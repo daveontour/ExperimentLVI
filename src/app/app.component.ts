@@ -281,8 +281,7 @@ export class AppComponent implements OnInit {
     modalRef.componentInstance.alloc = alloc;
     modalRef.result.then((result) => {
       if (result.login) {
-        debugger;
-        this.http.get<any>(this.globals.serverURL + '/deleteAllocation?counter=' + result.allocation.counter + '&start=' + result.allocation.startTime + '&end=' + result.allocation.endTime + '&airline=' + result.allocation.airline + '&flight=' + result.allocation.flightNumber + '&sto=' + result.allocation.scheduleTime).subscribe(data => {
+        this.http.get<any>(this.globals.serverURL + '/deleteAllocation?id='+result.allocation.id).subscribe(data => {
           this.gridApi.setRowData();
           this.loadData();
         });
@@ -301,8 +300,7 @@ export class AppComponent implements OnInit {
     modalRef.componentInstance.alloc = alloc;
     modalRef.result.then((result) => {
       if (result.login) {
-        debugger;
-        this.http.get<any>(this.globals.serverURL + '/deleteFlightAllocation?&start=' + result.allocation.startTime + '&end=' + result.allocation.endTime + '&airline=' + result.allocation.airline + '&flight=' + result.allocation.flightNumber + '&sto=' + result.allocation.scheduleTime).subscribe(data => {
+        this.http.get<any>(this.globals.serverURL + '/deleteFlightAllocation?&id='+result.allocation.id).subscribe(data => {
           this.gridApi.setRowData();
           this.loadData();
         });
@@ -345,16 +343,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  deleteToday() {
-    this.http.get<any>(this.globals.serverURL + '/deleteTodaysAllocations').subscribe(data => {
-      this.gridApi.setRowData();
-      this.loadData();
-    });
-  }
-
-
-
-  ngOnInit() {
+   ngOnInit() {
     const that = this;
     window.addEventListener("resize", function (e) {
       that.gridApi.sizeColumnsToFit();

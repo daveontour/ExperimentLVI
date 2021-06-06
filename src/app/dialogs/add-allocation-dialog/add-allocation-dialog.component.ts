@@ -76,7 +76,6 @@ export class AddAllocationDialogComponent {
     this.sto = $('#sto').val().toString();
 
 
-   debugger;
 
     this.activeModal.close({ login: true, first: this.first, last: this.last, day: this.day, start: this.start, end: this.end, airline: this.airline, flight: this.flight, sto: this.sto });
   }
