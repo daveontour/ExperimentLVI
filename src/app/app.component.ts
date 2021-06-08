@@ -15,6 +15,7 @@ import { UploadFileDialogComponent } from './dialogs/upload-file-dialog/upload-f
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
 import { LoginDialogComponent } from './dialogs/login-dialog.component';
 import { DeleteMultiDialogComponent } from './dialogs/delete-multi-dialog/delete-multi-dialog.component';
+import {GenericAlertComponent} from './dialogs/generic-alert.component';
 
 const _start = AbstractXHRObject.prototype._start;
 
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit {
   public getRowNodeId: any;
   private gridApi: any;
 
+  private passToken: string;
   public count = 0;
 
   public defaultColDef;
@@ -245,6 +247,7 @@ export class AppComponent implements OnInit {
             this.loadData();
             this.gridApi.sizeColumnsToFit();
             that.airport = data.airport;
+            that.passToken = data.token;
           } else {
             that.loginDialog();
           }
@@ -262,7 +265,20 @@ export class AppComponent implements OnInit {
     modalRef.componentInstance.counters = this.resources;
     modalRef.result.then((result) => {
       if (result.login) {
-        this.http.get<any>(this.globals.serverURL + '/addAllocation?first=' + result.first + '&last=' + result.last + '&day=' + result.day + '&start=' + result.start + '&end=' + result.end + '&airline=' + result.airline + '&flight=' + result.flight + '&sto=' + result.sto).subscribe(data => {
+        this.http.get<any>(this.globals.serverURL + '/addAllocation?passToken='+that.passToken+'&first=' + result.first + '&last=' + result.last + '&day=' + result.day + '&start=' + result.start + '&end=' + result.end + '&airline=' + result.airline + '&flight=' + result.flight + '&sto=' + result.sto).subscribe(data => {
+          if (data.status != 'OK'){
+            var  failRef = this.modalService.open(GenericAlertComponent, { centered: true, size: 'md', backdrop: 'static' });
+            failRef.componentInstance.title = 'Security Failure';
+            failRef.componentInstance.message = 'Invalid or Expired security token.';
+            failRef.componentInstance.message2 = 'Please login again';
+            failRef.componentInstance.button1 = 'OK';
+            failRef.componentInstance.showFooter = true;
+            failRef.result.then((result)=> {
+              that.loginDialog();
+            })
+            return;
+          }
+          
           this.gridApi.setRowData();
           this.loadData();
         });
@@ -281,7 +297,19 @@ export class AppComponent implements OnInit {
     modalRef.componentInstance.alloc = alloc;
     modalRef.result.then((result) => {
       if (result.login) {
-        this.http.get<any>(this.globals.serverURL + '/deleteAllocation?id='+result.allocation.id).subscribe(data => {
+        this.http.get<any>(this.globals.serverURL + '/deleteAllocation?passToken='+that.passToken+'&id='+result.allocation.id).subscribe(data => {
+          if (data.status != 'OK'){
+            var  failRef = this.modalService.open(GenericAlertComponent, { centered: true, size: 'md', backdrop: 'static' });
+            failRef.componentInstance.title = 'Security Failure';
+            failRef.componentInstance.message = 'Invalid or Expired security token.';
+            failRef.componentInstance.message2 = 'Please login again';
+            failRef.componentInstance.button1 = 'OK';
+            failRef.componentInstance.showFooter = true;
+            failRef.result.then((result)=> {
+              that.loginDialog();
+            })
+            return;
+          }          
           this.gridApi.setRowData();
           this.loadData();
         });
@@ -300,7 +328,19 @@ export class AppComponent implements OnInit {
     modalRef.componentInstance.alloc = alloc;
     modalRef.result.then((result) => {
       if (result.login) {
-        this.http.get<any>(this.globals.serverURL + '/deleteFlightAllocation?&id='+result.allocation.id).subscribe(data => {
+        this.http.get<any>(this.globals.serverURL + '/deleteFlightAllocation?passToken='+that.passToken+'&id='+result.allocation.id).subscribe(data => {
+          if (data.status != 'OK'){
+            var  failRef = this.modalService.open(GenericAlertComponent, { centered: true, size: 'md', backdrop: 'static' });
+            failRef.componentInstance.title = 'Security Failure';
+            failRef.componentInstance.message = 'Invalid or Expired security token.';
+            failRef.componentInstance.message2 = 'Please login again';
+            failRef.componentInstance.button1 = 'OK';
+            failRef.componentInstance.showFooter = true;
+            failRef.result.then((result)=> {
+              that.loginDialog();
+            })
+            return;
+          }
           this.gridApi.setRowData();
           this.loadData();
         });
@@ -334,7 +374,8 @@ export class AppComponent implements OnInit {
   }
 
   postFile(fileToUpload: File) {
-    const endpoint = this.globals.serverURL + '/postFile';
+    const that = this;
+    const endpoint = this.globals.serverURL + '/postFile?passToken='+this.passToken+'';
     const formData: FormData = new FormData();
     formData.append('fileKey', fileToUpload, fileToUpload.name);
     this.http.post(endpoint, formData).subscribe(data => {
