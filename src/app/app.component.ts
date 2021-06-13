@@ -18,6 +18,7 @@ import { UpdateMultiDialogComponent } from './dialogs/update-multi-dialog/update
 import { LoginDialogComponent } from './dialogs/login-dialog.component';
 import { DeleteMultiDialogComponent } from './dialogs/delete-multi-dialog/delete-multi-dialog.component';
 import {GenericAlertComponent} from './dialogs/generic-alert.component';
+import {RTSDialogComponent} from './dialogs/rts-dialog/rts-dialog.component';
 
 const _start = AbstractXHRObject.prototype._start;
 
@@ -433,6 +434,18 @@ export class AppComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result.login) {
         this.postFile(result.file);
+      }
+    });
+  }
+
+  openRTSDialog(message = ''): any {
+
+    const that = this;
+    const modalRef = this.modalService.open(RTSDialogComponent, { centered: true, size: 'md', backdrop: 'static' });
+    modalRef.componentInstance.message = message;
+    modalRef.result.then((result) => {
+      if (result.login) {
+        window.location.href=this.globals.serverURL + '/downloadRTS?passToken='+this.passToken+'&from='+result.dayFrom+'&to='+result.dayTong ;
       }
     });
   }

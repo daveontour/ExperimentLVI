@@ -32,6 +32,8 @@ import { DeleteMultiDialogComponent } from './dialogs/delete-multi-dialog/delete
 import { UpdateDialogComponent } from './dialogs/update-dialog/update-dialog.component';
 import { UpdateMultiDialogComponent } from './dialogs/update-multi-dialog/update-multi-dialog.component';
 
+import { RTSDialogComponent } from './dialogs/rts-dialog/rts-dialog.component';
+
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSliderModule} from '@angular/material/slider';
@@ -51,7 +53,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
      DeleteDialogComponent,
      DeleteMultiDialogComponent,
      UpdateDialogComponent,
-     UpdateMultiDialogComponent ],
+     UpdateMultiDialogComponent,
+    RTSDialogComponent ],
   imports: [
    BrowserModule,
    CommonModule,
@@ -70,6 +73,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   providers: [ MessengerService, DirectorService, GlobalsService, ],
   bootstrap: [AppComponent],
   exports: [BrowserModule, MatMenuModule, MatIconModule, MatSliderModule],
-  entryComponents: [  SortableHeaderTimeMarkerComponent, AddAllocationDialogComponent, UploadFileDialogComponent, DeleteDialogComponent,DeleteMultiDialogComponent, UpdateDialogComponent, UpdateMultiDialogComponent,LoginDialogComponent, GenericAlertComponent ],
+  entryComponents: [  SortableHeaderTimeMarkerComponent, AddAllocationDialogComponent, UploadFileDialogComponent, DeleteDialogComponent,DeleteMultiDialogComponent, RTSDialogComponent , UpdateDialogComponent, UpdateMultiDialogComponent,LoginDialogComponent, GenericAlertComponent ],
 })
 export class AppModule { }
