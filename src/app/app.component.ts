@@ -13,6 +13,8 @@ import * as $ from 'jquery';
 import { AddAllocationDialogComponent } from './dialogs/add-allocation-dialog/add-allocation-dialog.component';
 import { UploadFileDialogComponent } from './dialogs/upload-file-dialog/upload-file-dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
+import { UpdateDialogComponent } from './dialogs/update-dialog/update-dialog.component';
+import { UpdateMultiDialogComponent } from './dialogs/update-multi-dialog/update-multi-dialog.component';
 import { LoginDialogComponent } from './dialogs/login-dialog.component';
 import { DeleteMultiDialogComponent } from './dialogs/delete-multi-dialog/delete-multi-dialog.component';
 import {GenericAlertComponent} from './dialogs/generic-alert.component';
@@ -279,6 +281,68 @@ export class AppComponent implements OnInit {
             return;
           }
           
+          this.gridApi.setRowData();
+          this.loadData();
+        });
+      }
+    });
+  }
+
+  updateAllocation(alloc: any){
+    this.openUpdateDialog(alloc);
+  }
+
+  openUpdateDialog(alloc: any): any {
+
+    const that = this;
+    const modalRef = this.modalService.open(UpdateDialogComponent, { centered: true, size: 'md', backdrop: 'static' });
+    modalRef.componentInstance.alloc = alloc;
+    modalRef.result.then((result) => {
+      if (result.login) {
+        this.http.get<any>(this.globals.serverURL + '/updateAllocation?passToken='+that.passToken+'&id='+result.allocation.id+'&day='+result.day+'&start='+result.start+'&end='+result.end).subscribe(data => {
+          if (data.status != 'OK'){
+            var  failRef = this.modalService.open(GenericAlertComponent, { centered: true, size: 'md', backdrop: 'static' });
+            failRef.componentInstance.title = 'Security Failure';
+            failRef.componentInstance.message = 'Invalid or Expired security token.';
+            failRef.componentInstance.message2 = 'Please login again';
+            failRef.componentInstance.button1 = 'OK';
+            failRef.componentInstance.showFooter = true;
+            failRef.result.then((result)=> {
+              that.loginDialog();
+            })
+            return;
+          }          
+          this.gridApi.setRowData();
+          this.loadData();
+        });
+      }
+    });
+  }
+
+  updateFlightAllocation(alloc: any){
+    this.openUpdateMultiDialog(alloc);
+  }
+
+  openUpdateMultiDialog(alloc: any): any {
+
+    const that = this;
+    const modalRef = this.modalService.open(UpdateMultiDialogComponent, { centered: true, size: 'md', backdrop: 'static' });
+    modalRef.componentInstance.alloc = alloc;
+    modalRef.result.then((result) => {
+      if (result.login) {
+        this.http.get<any>(this.globals.serverURL + '/updateGroupAllocation?passToken='+that.passToken+'&id='+result.allocation.id+'&day='+result.day+'&start='+result.start+'&end='+result.end).subscribe(data => {
+          if (data.status != 'OK'){
+            var  failRef = this.modalService.open(GenericAlertComponent, { centered: true, size: 'md', backdrop: 'static' });
+            failRef.componentInstance.title = 'Security Failure';
+            failRef.componentInstance.message = 'Invalid or Expired security token.';
+            failRef.componentInstance.message2 = 'Please login again';
+            failRef.componentInstance.button1 = 'OK';
+            failRef.componentInstance.showFooter = true;
+            failRef.result.then((result)=> {
+              that.loginDialog();
+            })
+            return;
+          }          
           this.gridApi.setRowData();
           this.loadData();
         });

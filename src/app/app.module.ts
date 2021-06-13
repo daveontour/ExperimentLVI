@@ -29,6 +29,9 @@ import { UploadFileDialogComponent } from './dialogs/upload-file-dialog/upload-f
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
 import { DeleteMultiDialogComponent } from './dialogs/delete-multi-dialog/delete-multi-dialog.component';
 
+import { UpdateDialogComponent } from './dialogs/update-dialog/update-dialog.component';
+import { UpdateMultiDialogComponent } from './dialogs/update-multi-dialog/update-multi-dialog.component';
+
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSliderModule} from '@angular/material/slider';
@@ -46,7 +49,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
      AddAllocationDialogComponent,
      UploadFileDialogComponent,
      DeleteDialogComponent,
-     DeleteMultiDialogComponent ],
+     DeleteMultiDialogComponent,
+     UpdateDialogComponent,
+     UpdateMultiDialogComponent ],
   imports: [
    BrowserModule,
    CommonModule,
@@ -65,6 +70,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   providers: [ MessengerService, DirectorService, GlobalsService, ],
   bootstrap: [AppComponent],
   exports: [BrowserModule, MatMenuModule, MatIconModule, MatSliderModule],
-  entryComponents: [  SortableHeaderTimeMarkerComponent, AddAllocationDialogComponent, UploadFileDialogComponent, DeleteDialogComponent,DeleteMultiDialogComponent,LoginDialogComponent, GenericAlertComponent ],
+  entryComponents: [  SortableHeaderTimeMarkerComponent, AddAllocationDialogComponent, UploadFileDialogComponent, DeleteDialogComponent,DeleteMultiDialogComponent, UpdateDialogComponent, UpdateMultiDialogComponent,LoginDialogComponent, GenericAlertComponent ],
 })
 export class AppModule { }

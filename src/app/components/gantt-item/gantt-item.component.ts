@@ -158,6 +158,13 @@ export class GanttRendererComponent implements ICellRendererAngularComp, AfterVi
         AppComponent.that.deleteFlightAllocation(this.record[index]);
     }
 
+    updateSingleAllocation(index: number){
+        AppComponent.that.updateAllocation(this.record[index]);
+    }
+    updateFlightAllocation(index: number){
+        AppComponent.that.updateFlightAllocation(this.record[index]);
+    }
+
     openAddDialog(){
         AppComponent.that.openAddDialog();
     }
