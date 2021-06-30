@@ -93,7 +93,7 @@ export class GanttRendererComponent implements ICellRendererAngularComp, AfterVi
 
         // Calculate the new value for each allocation
 
-
+debugger;
         if (this.flights != null) {
 
             this.flights.forEach(el => {

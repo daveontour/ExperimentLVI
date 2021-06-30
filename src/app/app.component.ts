@@ -244,7 +244,7 @@ export class AppComponent implements OnInit {
       if (result.login) {
 
         // Validte the user is authenticated
-        this.http.get<any>(this.globals.serverURL + '/validatAdminLogin?id=' + result.id + '&token=' + result.token + '').subscribe(data => {
+        this.http.get<any>(this.globals.serverURL + '/validateAdminLogin?id=' + result.id + '&token=' + result.token + '').subscribe(data => {
 
           if (data.status == "SUCCESS"){
             this.loadData();
@@ -445,7 +445,7 @@ export class AppComponent implements OnInit {
     modalRef.componentInstance.message = message;
     modalRef.result.then((result) => {
       if (result.login) {
-        window.location.href=this.globals.serverURL + '/downloadRTS?passToken='+this.passToken+'&from='+result.dayFrom+'&to='+result.dayTong ;
+        window.location.href=this.globals.serverURL + '/downloadRTS?passToken='+this.passToken+'&from='+result.dayFrom+'&to='+result.dayTo ;
       }
     });
   }

@@ -12,22 +12,23 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
     
     </div>
 
+    <div class="modal-body" style="color:black" align="left">
     <table>
 
-    <tr><td><label style="width:150px; color:black">Date:&nbsp;</label></td><td> <input class="gridinput" id = "day"  style="width:150px;background-color:white; color:black" type="date"></td></tr>
+    <tr><td align="right" style="color:black;" >Date:&nbsp;</td><td> <input class="gridinput" id = "day"  style="width:150px;background-color:white; color:black" type="date"></td></tr>
     
-    <tr><td><label style="width:150px; color:black">Start Time:&nbsp;</label></td><td>
+    <tr><td align="right" style="color:black;" >Start Time:&nbsp;</td><td>
     <input [ngxTimepicker]="picker3" [format]="24" class="gridinput"  id = "start" style="height:25px;width:90px; font-size: 12px;">
     <ngx-material-timepicker #picker3 ></ngx-material-timepicker>
     </td></tr>
    
-    <tr><td><label style="width:150px; color:black">End Time:&nbsp;</label></td><td>
+    <tr><td align="right" style="color:black;" >End Time:&nbsp;</td><td>
     <input [ngxTimepicker]="picker4" [format]="24" class="gridinput"  id = "end" style="height:25px;width:90px; font-size: 12px;">
     <ngx-material-timepicker #picker4 ></ngx-material-timepicker>
     </td></tr>
 
      </table>
-
+</div>
     <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="button2Click()">Cancel</button>
     <button type="button" class="btn btn-outline-dark" (click)="button1Click()">Update</button>
